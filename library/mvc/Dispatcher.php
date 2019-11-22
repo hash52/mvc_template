@@ -28,7 +28,7 @@ class Dispatcher
         if (0 < count($params)) {
             $controller = $params[0];
         }
-
+        $controller = $this->transferControler($controller);
         // １番目のパラメーターをもとにコントローラークラスインスタンス取得
         $controllerInstance = $this->getControllerInstance($controller);
         if (null == $controller) {
@@ -75,6 +75,20 @@ class Dispatcher
         $controllerInstarnce = new $className();
 
         return $controllerInstarnce;
+    }
+
+    //URLのコントローラ部がtransfer.iniのキーに一致すれば、実際の遷移先をiniで定義したコントローラに変更する
+    //例：basic/get → HogeController@get
+    private function transferControler($controller)
+    {
+        $iniPath = $this->sysRoot . '/ini/transfer.ini';
+        if (file_exists($iniPath)) {
+            $ini = parse_ini_file($iniPath);
+            if (array_key_exists($controller, $ini)) {
+                $controller = $ini[$controller];
+            }
+        }
+        return $controller;
     }
 }
 
