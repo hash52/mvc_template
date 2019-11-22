@@ -10,6 +10,8 @@ require_once $mvc_library_path.'Request.php';
 
 require_once $public_sapmle_path.'models/Hoge.php';
 
+require_once $mvc_library_path.'Smarty/Smarty.class.php';
+
 
 $dispatcher = new Dispatcher();
 $dispatcher->setSystemRoot('/Users/HirokiHashi/workspace/php/mvc_template/public_html/sample');
