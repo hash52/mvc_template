@@ -19,6 +19,20 @@ class HogeController
           echo $key.":".$value."\n";
         }
     }
+
+    public function createAction()
+    {
+        $hoge = new Hoge();
+        echo $hoge->create("hogehoge");
+    }
+
+    public function getAction(){
+        $hoge = new Hoge();
+        $hoges = $hoge->getHoge();
+        foreach ($hoges as $key => $value) {
+          echo $key.":".$value['text']."\n";
+        }
+    }
 }
 
 ?>
