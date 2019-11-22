@@ -37,6 +37,21 @@ class HogeController extends ControllerBase
        $data = array('log1','log2','log3','log4');
        $this->view->assign("logs", $data);
     }
+
+    public function addAction()
+    {
+        $hoge = new Hoge();
+        echo $hoge->add(['text'=>$this->request->getQuery()['text']]);
+    }
+
+    public function getbyidAction()
+    {
+        $hoge = new Hoge();
+        $hoges = $hoge->getById($this->request->getQuery()['id']);
+        foreach ($hoges as $key => $value) {
+          echo 'id:'.$value['id']."/text:".$value['text']."\n";
+        }
+    }
 }
 
 ?>

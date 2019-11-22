@@ -24,6 +24,20 @@ class Hoge extends ModelBase
         return $res;
     }
 
+    //親クラスの機能で簡潔に記述できる
+    public function add($data)
+    {
+       return $this->insert($data);
+    }
+
+    //親クラスの機能で簡潔に記述できる
+    public function getById($id)
+    {
+       $sql = sprintf('SELECT * FROM %s where id = :id', $this->name);
+       $params = array('id' => $id);
+       return $this->query($sql, $params);
+    }
+
 }
 
 ?>
