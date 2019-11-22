@@ -52,6 +52,20 @@ class HogeController extends ControllerBase
           echo 'id:'.$value['id']."/text:".$value['text']."\n";
         }
     }
+
+    //http://localhost/hoge/threads/id_3 でid:3のhogeが取得できる
+    public function threadsAction()
+    {
+        $id = 1;
+        if (null != $this->request->getParam('id')) {
+          $id = $this->request->getParam('id');
+        }
+        $hoge = new Hoge();
+        $hoges = $hoges = $hoge->getById($id);
+        foreach ($hoges as $key => $value) {
+          echo 'id:'.$value['id']."/text:".$value['text']."\n";
+        }
+    }
 }
 
 ?>

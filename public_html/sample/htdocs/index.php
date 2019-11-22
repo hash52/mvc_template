@@ -9,6 +9,7 @@ require_once $mvc_library_path.'QueryString.php';
 require_once $mvc_library_path.'Request.php';
 require_once $mvc_library_path.'ControllerBase.php';
 require_once $mvc_library_path.'ModelBase.php';
+require_once $mvc_library_path.'UrlParameter.php';
 require_once $mvc_library_path.'Smarty/Smarty.class.php';
 
 require_once $public_sapmle_path.'models/Hoge.php';

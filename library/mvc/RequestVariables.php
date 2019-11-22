@@ -3,7 +3,7 @@
 // リクエスト変数抽象クラス
 abstract class RequestVariables
 {
-    protected $_values;
+    protected $values;
 
     // コンストラクタ
     public function __construct()
@@ -19,10 +19,10 @@ abstract class RequestVariables
     {
         $ret = null;
         if (null == $key) {
-            $ret = $this->_values;
+            $ret = $this->values;
         } else {
             if (true == $this->has($key)) {
-                $ret = $this->_values[$key];
+                $ret = $this->values[$key];
             }
         }
         return $ret;
@@ -31,7 +31,7 @@ abstract class RequestVariables
     // 指定のキーが存在するか確認
     public function has($key)
     {
-        if (false == array_key_exists($key, $this->_values)) {
+        if (false == array_key_exists($key, $this->values)) {
             return false;
         }
         return true;
