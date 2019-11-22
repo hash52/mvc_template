@@ -17,9 +17,11 @@ class Dispatcher
 
         $params = array();
         if ('' != $param) {
+            $param = explode('?',$param)[0];
             // パラメーターを / で分割
             $params = explode('/', $param);
         }
+
 
         // １番目のパラメーターをコントローラーとして取得
         $controller = "index";

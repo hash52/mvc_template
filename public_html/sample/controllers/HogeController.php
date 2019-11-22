@@ -1,10 +1,23 @@
 <?php
 
 class HogeController
-{   
+{
+    private $request;
+
+    // コンストラクタ
+    public function __construct()
+    {
+        // リクエスト
+        $this->request = new Request();
+    }
+
     public function helloAction()
     {
-        echo 'Hello World!';
+        $query = $this->request->getQuery();
+        echo "Hello World!\n";
+        foreach ($query as $key => $value) {
+          echo $key.":".$value."\n";
+        }
     }
 }
 
