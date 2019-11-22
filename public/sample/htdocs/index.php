@@ -1,6 +1,6 @@
 <?php
 $mvc_library_path = '/Users/HirokiHashi/workspace/php/mvc_template/library/mvc/';
-$public_sapmle_path = '/Users/HirokiHashi/workspace/php/mvc_template/public_html/sample/';
+$public_sapmle_path = '/Users/HirokiHashi/workspace/php/mvc_template/public/sample/';
 
 require_once $mvc_library_path.'Dispatcher.php';
 require_once $mvc_library_path.'RequestVariables.php';
@@ -25,7 +25,7 @@ $connInfo = array(
 ModelBase::setConnectionInfo($connInfo );
 
 $dispatcher = new Dispatcher();
-$dispatcher->setSystemRoot('/Users/HirokiHashi/workspace/php/mvc_template/public_html/sample');
+$dispatcher->setSystemRoot('/Users/HirokiHashi/workspace/php/mvc_template/public/sample');
 $dispatcher->dispatch();
 
 ?>
