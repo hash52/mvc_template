@@ -7,6 +7,7 @@ require_once $mvc_library_path.'RequestVariables.php';
 require_once $mvc_library_path.'Post.php';
 require_once $mvc_library_path.'QueryString.php';
 require_once $mvc_library_path.'Request.php';
+require_once $mvc_library_path.'ControllerBase.php';
 
 require_once $public_sapmle_path.'models/Hoge.php';
 

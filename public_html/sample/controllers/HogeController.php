@@ -1,20 +1,7 @@
 <?php
 
-class HogeController
+class HogeController extends ControllerBase
 {
-    private $request;
-    private $view;
-
-    // コンストラクタ
-    public function __construct()
-    {
-        // リクエスト
-        $this->request = new Request();
-        $this->view = new Smarty();
-        $this->view->template_dir = '../views/templates';
-        $this->view->compile_dir = '../views/templates_c';
-    }
-
     public function helloAction()
     {
         $query = $this->request->getQuery();
@@ -38,7 +25,7 @@ class HogeController
         }
     }
 
-    public function viewAction()
+    public function hogeviewAction()
     {
       // 文字列変数
        $this->view->assign("hello", "Hello");
@@ -49,7 +36,6 @@ class HogeController
        // 配列も渡せるよ
        $data = array('log1','log2','log3','log4');
        $this->view->assign("logs", $data);
-       $this->view->display('hogeview.html');
     }
 }
 

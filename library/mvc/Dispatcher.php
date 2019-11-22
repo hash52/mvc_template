@@ -24,29 +24,57 @@ class Dispatcher
 
 
         // １番目のパラメーターをコントローラーとして取得
-        $controller = "index";
+        $controller = null;
         if (0 < count($params)) {
             $controller = $params[0];
         }
 
-        // パラメータより取得したコントローラー名によりクラス振分け
-        $className = ucfirst(strtolower($controller)) . 'Controller';
-
-        // クラスファイル読込
-        require_once $this->sysRoot . '/controllers/' . $className . '.php';
-
-       // クラスインスタンス生成
-        $controllerInstance = new $className();
-
-        // 2番目のパラメーターをコントローラーとして取得
-        $action= 'index';
-        if (1 < count($params)) {
-            $action= $params[1];
+        // １番目のパラメーターをもとにコントローラークラスインスタンス取得
+        $controllerInstance = $this->getControllerInstance($controller);
+        if (null == $controller) {
+            header("HTTP/1.0 404 Not Found");
+            exit;
         }
 
-        // アクションメソッドを実行
-        $actionMethod = $action . 'Action';
-        $controllerInstance->$actionMethod();
+        // 2番目のパラメーターをアクションとして取得
+        $action= "index";
+        if (1 < count($params)) {
+            $action = $params[1];
+        }
+        // アクションメソッドの存在確認
+        if (false == method_exists($controllerInstance, $action . 'Action')) {
+            header("HTTP/1.0 404 Not Found");
+            exit;
+        }
+
+        // コントローラー初期設定
+        $controllerInstance->setSystemRoot($this->sysRoot);
+        $controllerInstance->setControllerAction($controller, $action);
+        // 処理実行
+        $controllerInstance->run();
+    }
+
+    // コントローラークラスのインスタンスを取得
+    private function getControllerInstance($controller)
+    {
+        // 一文字目のみ大文字に変換＋"Controller"
+        $className = ucfirst(strtolower($controller)) . 'Controller';
+        // コントローラーファイル名
+        $controllerFileName = sprintf('%s/controllers/%s.php', $this->sysRoot, $className);
+        // ファイル存在チェック
+        if (false == file_exists($controllerFileName)) {
+            return null;
+        }
+        // クラスファイルを読込
+        require_once $controllerFileName;
+        // クラスが定義されているかチェック
+        if (false == class_exists($className)) {
+            return null;
+        }
+        // クラスインスタンス生成
+        $controllerInstarnce = new $className();
+
+        return $controllerInstarnce;
     }
 }
 
