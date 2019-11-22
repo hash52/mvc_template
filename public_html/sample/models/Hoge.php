@@ -1,18 +1,8 @@
 <?php
 
-class Hoge
+class Hoge extends ModelBase
 {
-    private $db;
-    private $name = 'hoge';
-
-    public function __construct()
-    {
-      $db_perm = array(
-        PDO::ATTR_EMULATE_PREPARES => false,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-      );
-        $this->db = new PDO('mysql:host='.'localhost'.'; dbname='.'mvc_template'.'; charset='.'utf8mb4' , 'root', 'root', $db_perm);
-    }
+    protected $name = 'hoge';
 
     // カート基本情報取得
     public function getHoge()
