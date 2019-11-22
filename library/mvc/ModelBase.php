@@ -10,6 +10,10 @@ class ModelBase
     public function __construct()
     {
         $this->initDb();
+        // 継承先で$nameが設定されていない場合はクラス名からテーブル名を生成
+        if ($this->name == null) {
+            $this->setDefaultTableName();
+        }
     }
 
     public function initDb()
@@ -83,6 +87,23 @@ class ModelBase
         $res = $stmt->execute();
 
         return $res;
+    }
+
+    //キャメルケースで命名されたクラス名からスネークケースのテーブル名を自動生成！動作未検証
+    public function setDefaultTableName()
+    {
+        $className = get_class($this);
+        $len = strlen($className);
+        $tableName = '';
+        for ($i = 0; $i < $len; $i++) {
+            $char = substr($className, $i, 1);
+            $lower = strtolower($char);
+            if ($i > 0 && $char != $lower) {
+                $tableName .= '_';
+            }
+            $tableName .= $lower;
+        }
+        $this->name  = $tableName;
     }
 }
 
