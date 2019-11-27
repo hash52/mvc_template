@@ -1,6 +1,8 @@
 <?php
-
-// リクエスト変数抽象クラス
+/*
+ リクエスト変数抽象クラス
+ Post.php,QueryString.php,UrlParameter.phpの共通処理をまとめている
+*/
 abstract class RequestVariables
 {
     protected $values;
@@ -11,13 +13,14 @@ abstract class RequestVariables
         $this->setValues();
     }
 
-    // パラメータ値設定
+    // パラメータ値設定。protected＝このクラスと子クラスのみ参照可＝Request.phpやその他のクラスから値をセットすることは不可
     abstract protected function setValues();
 
     // 指定キーのパラメータを取得
     public function get($key = null)
     {
         $ret = null;
+        //引数なしでget()が呼ばれたら$valuesをそのまま返す
         if (null == $key) {
             $ret = $this->values;
         } else {
@@ -31,10 +34,7 @@ abstract class RequestVariables
     // 指定のキーが存在するか確認
     public function has($key)
     {
-        if (false == array_key_exists($key, $this->values)) {
-            return false;
-        }
-        return true;
+        return array_key_exists($key, $this->values);
     }
 }
 
