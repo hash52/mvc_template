@@ -1,5 +1,7 @@
 <?php
-
+/*
+　dispatch・・(意)送る、送り出す、発送する
+*/
 class Dispatcher
 {
     private $sysRoot;
@@ -12,37 +14,42 @@ class Dispatcher
     public function dispatch()
     {
         // パラメーター取得（行頭末尾の / は削除）
+        // 例: ttp://hoge.com/contr/act?id=5/ → contr/act?id=5
         $param = preg_replace('/^\//', '', $_SERVER['REQUEST_URI']);
         $param = preg_replace('/\/$/', '', $param);
 
         $params = array();
         if ('' != $param) {
+            // 例: contr/act?id=5 → contr/act
             $param = explode('?',$param)[0];
-            // パラメーターを / で分割
+            // パラメーターを / で分割。例: $params = ['contr','act']
             $params = explode('/', $param);
         }
 
-
-        // １番目のパラメーターをコントローラーとして取得
+        // $params[0]をコントローラー名として取得（$params[0]='contr'ならContrControllerをインスタンス化）
         $controller = null;
         if (0 < count($params)) {
             $controller = $params[0];
         }
+        // 次の１行は発展的な内容であるので、初めて読むときは飛ばしてもいい(設定ファイルに基づいたルーティング処理)
         $controller = $this->transferControler($controller);
-        // １番目のパラメーターをもとにコントローラークラスインスタンス取得
+        // $controller = $params[0] = ttp://hoge.com/contr/actの "contr" をもとにコントローラークラスインスタンス取得
+        // どうして"contr"からContrControllerのインスタンスが生成できるのかは、getControllerInstanceメソッドの実装を読むとわかる
         $controllerInstance = $this->getControllerInstance($controller);
         if (null == $controller) {
+            //生成するコントローラが見つからなければ404を返して終了
             header("HTTP/1.0 404 Not Found");
             exit;
         }
 
-        // 2番目のパラメーターをアクションとして取得
+        // $params[1]をアクション名として取得（$params[1]='act'actActionメソッドを実行)
         $action= "index";
         if (1 < count($params)) {
             $action = $params[1];
         }
         // アクションメソッドの存在確認
-        if (false == method_exists($controllerInstance, $action . 'Action')) {
+        // 例: ContrController.phpにactActionメソッドがあるかどうか確認している
+        if (!method_exists($controllerInstance, $action . 'Action')) {
             header("HTTP/1.0 404 Not Found");
             exit;
         }
@@ -57,11 +64,11 @@ class Dispatcher
     // コントローラークラスのインスタンスを取得
     private function getControllerInstance($controller)
     {
-        // 一文字目のみ大文字に変換＋"Controller"
+        // "."で文字列連結。一文字目のみ大文字に変換＋"Controller"
         $className = ucfirst(strtolower($controller)) . 'Controller';
-        // コントローラーファイル名
+        // ディレクトリとコントローラーファイル名の生成（例：$controllerFileName = /Users/HirokiHashi/workspace/php/mvc_template/public/sample/controllers/ContrController.php）
         $controllerFileName = sprintf('%s/controllers/%s.php', $this->sysRoot, $className);
-        // ファイル存在チェック
+        // ファイル存在チェック。なければ呼び出し元で404を返すため。
         if (false == file_exists($controllerFileName)) {
             return null;
         }
