@@ -10,8 +10,8 @@
 　.htaccessとはApacheの設定ファイルであるが、詳細についてはここでは省略。
 　気になる人は「url rewrite apache」でググってみましょう
 */
-$mvc_library_path = '/Users/HirokiHashi/workspace/php/mvc_template/library/mvc/';
-$public_sapmle_path = '/Users/HirokiHashi/workspace/php/mvc_template/public/sample/';
+$mvc_library_path = '/home/ec2-user/environment/mvc_template/library/mvc/';
+$public_sapmle_path = '/home/ec2-user/environment/mvc_template/public/sample/';
 
 //必要な外部phpファイルの読み込みは全てここで行っている。
 require_once $mvc_library_path.'Dispatcher.php';
@@ -32,13 +32,13 @@ $connInfo = array(
     'dbname'   => 'mvc_template',
     'charset'   => 'utf8mb4',
     'dbuser'   => 'root',
-    'password' => 'root'
+    'password' => ''
 );
 //ModelBaseの$connInfoはstaticであるので、インスタンスを超えて共有される値
 ModelBase::setConnectionInfo($connInfo );
 
 $dispatcher = new Dispatcher();
-$dispatcher->setSystemRoot('/Users/HirokiHashi/workspace/php/mvc_template/public/sample');
+$dispatcher->setSystemRoot('/home/ec2-user/environment/mvc_template/public/sample');
 //全ての処理の起点、Dispatcherクラスのdispatchメソッドへ
 $dispatcher->dispatch();
 
