@@ -21,7 +21,7 @@ class HogeController extends ControllerBase
         $hoge = new Hoge();
         $hoges = $hoge->getHoge();
         foreach ($hoges as $key => $value) {
-          echo $key.":".$value['text']."\n";
+          echo $key.":".$value['text']."</br>";
         }
     }
 
