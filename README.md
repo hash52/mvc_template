@@ -139,7 +139,7 @@ MAMPの「Preference」から「Web Server」の「Document Root」を編集し�
   
 okを押し、上手く行けば、サーバーが再起動します  
 MAMPのランプの点灯を確認したら、下記URLにアクセスしましょう  
-[http://localhost/hoge/get](http://localhost/hoge/get)
+[http://localhost/hoge/get](http://localhost/hoge/get)  
 ![mvc_hoge_get](https://user-images.githubusercontent.com/17327364/70988586-79308f00-2105-11ea-9fdb-d012607f0d40.png)
   
 このように表示されれば、アプリのセットアップはひとまず完了です。  
