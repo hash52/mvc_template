@@ -30,6 +30,7 @@ require_once $public_sapmle_path.'models/Hoge.php';
 $connInfo = array(
     'host'     => 'localhost',
     'dbname'   => 'mvc_template',
+    'port' => '8880',
     'charset'   => 'utf8mb4',
     'dbuser'   => 'root',
     'password' => 'root'

@@ -19,8 +19,9 @@ class ModelBase
     public function initDb()
     {
         $dsn = sprintf(
-            'mysql:host=%s;dbname=%s;charset=%s',
+            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
             self::$connInfo['host'],
+            self::$connInfo['port'],
             self::$connInfo['dbname'],
             self::$connInfo['charset']
         );
