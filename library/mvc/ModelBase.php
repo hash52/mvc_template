@@ -55,7 +55,7 @@ class ModelBase
         $values = array();
         foreach ($data as $key => $val) {
             $fields[] = $key;
-            $values[] = ':' . $val;
+            $values[] = ':' . $key;
         }
         $sql = sprintf(
             "INSERT INTO %s (%s) VALUES (%s)",
@@ -63,12 +63,12 @@ class ModelBase
             implode(',', $fields),
             implode(',', $values)
         );
+
         $stmt = $this->db->prepare($sql);
         foreach ($data as $key => $val) {
-            $stmt->bindValue(':' . $val, $val);
+            $stmt->bindValue(':' . $key, $val);
         }
         $res  = $stmt->execute();
-
         return $res;
     }
 
