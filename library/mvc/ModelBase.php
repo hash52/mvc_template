@@ -51,24 +51,41 @@ class ModelBase
     // INSERTを実行
     public function insert($data)
     {
+
+      // $dataを出力-----
+      $error_log = "C:\MAMP\logs\php_error.log";
+      // ----------------------
+
         $fields = array();
         $values = array();
+        // $連想配列dataの'キー'を配列$fieldsに、':値'を配列$valuesに代入
         foreach ($data as $key => $val) {
             $fields[] = $key;
-            $values[] = ':' . $val;
+            $values[] = ':' . $key;
         }
+        // 下記SQL文として$sqlに代入
+        // $nameテーブルの$fieldsカラムを','区切りで文字列にしたものを、
+        // $valuesを','区切りで文字列にしたものに挿入する
         $sql = sprintf(
             "INSERT INTO %s (%s) VALUES (%s)",
             $this->name,
-            implode(',', $fields),
-            implode(',', $values)
+            implode(',', $fields), //'title','body'
+            implode(',', $values)  //':title',':body'
         );
-        $stmt = $this->db->prepare($sql);
-        foreach ($data as $key => $val) {
-            $stmt->bindValue(':' . $val, $val);
-        }
-        $res  = $stmt->execute();
 
+        // $sqlも出力-----
+        file_put_contents($error_log,'★★'.$sql."\n");
+        // -----------------------------
+
+        // prepareメソッドを用いて$stmtへSQL文をセット
+        $stmt = $this->db->prepare($sql);
+        // 引数の連想配列$dataのキー$key,値$valをbindValueメソッドを用いて
+        // パラメータに値をセット
+        foreach ($data as $key => $val) {
+            $stmt->bindValue(':' . $key, $val);
+        }
+        // executeメソッドでクエリ実行
+        $res  = $stmt->execute();
         return $res;
     }
 
