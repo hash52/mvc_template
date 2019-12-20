@@ -67,6 +67,14 @@ abstract class ControllerBase
     protected function preAction()
     {
     }
-}
 
+
+    // リダイレクト
+    public function redirect($url)
+    {
+        $redirectUrl = 'http://'.$_SERVER['HTTP_HOST'].'/'.$url;
+        header('Location: ' . $redirectUrl);
+        exit();
+    }
+}
 ?>
